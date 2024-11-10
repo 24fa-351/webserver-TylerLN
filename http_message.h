@@ -8,6 +8,7 @@ typedef struct msg {
   char* body;
   int body_length;
   char* headers;
+  char* query_params;
 } http_client_message_t;
 
 typedef enum { BAD_REQUEST, CLOSE_CONNECTION, MESSAGE } http_read_result_t;

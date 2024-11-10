@@ -1,0 +1,91 @@
+Terminal 1:
+
+    ./server 81
+    Server Listening on Port: 81
+    Accepted connection on 4
+    Handling connection on 4
+    Received HTTP Request:
+    Method: GET
+    Path: /static/index.html
+    HTTP Version: HTTP/1.1
+    Host: localhost
+    Date: sdfadas
+    Accept: text/plain
+    Content-length: 0
+
+
+    Query Params: (null)
+    Handling connection on 4
+    Received HTTP Request:
+    Method: GET
+    Path: /calc
+    HTTP Version: HTTP/1.1
+    Host: localhost
+    Date: sdfadas
+    Accept: text/plain
+    Content-length: 0
+
+
+    Query Params: a=59&b=3
+    Handling connection on 4
+    Received HTTP Request:
+    Method: GET
+    Path: /stats
+    HTTP Version: HTTP/1.1
+    Host: localhost
+    Connection: close
+
+
+    Query Params: (null)
+    Handling connection on 4
+    Closing connection on 4
+
+Terminal 2:
+
+    telnet localhost 81
+    Trying 127.0.0.1...
+    Connected to localhost.
+    Escape character is '^]'.
+    GET /static/index.html HTTP/1.1
+    Host: localhost
+    Date: sdfadas
+    Accept: text/plain
+    Content-length: 0
+
+    HTTP/1.1 200 OK
+    Content-Length: 138
+
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>Static File Test</title>
+    </head>
+    <body>
+        <h1>One Two Three Five Four Six</h1>
+    </body>
+    </html>
+    GET /calc?a=59&b=3 HTTP/1.1
+    Host: localhost
+    Date: sdfadas
+    Accept: text/plain
+    Content-length: 0
+
+    HTTP/1.1 200 OK
+    Content-Length: 63
+    Content-Type: text/html
+
+    <html><body><h1>Calculation Result</h1><p>62</p></body></html>
+    GET /stats HTTP/1.1
+    Host: localhost
+    Connection: close
+
+    HTTP/1.1 200 OK
+    Content-Type: text/plain
+
+    Total Requests: 3
+    Total Received Bytes: 0
+    Total Sent Bytes: 305
+    ^]
+
+    telnet> quit
+    Connection closed.
