@@ -11,7 +11,7 @@
 
 #define LISTEN_BACKLOG 5
 #define MAX_BUFFER_SIZE 1024
-#define DEFAULT_PORT 46646
+#define DEFAULT_PORT 83
 
 int respond_to_http_message(int sock_fd, http_client_message_t* http_msg) {
   char* response = "HTTP/1.1 200 OK\r\nContent-Length: 0\r\n\r\n";
@@ -25,10 +25,12 @@ void handle_connection(int* sock_fd_ptr) {
 
   while (1) {
     printf("Handling connection on %d\n", sock_fd);
+
     http_client_message_t* http_msg = NULL;
     http_read_result_t result;
 
     read_http_client_message(sock_fd, &http_msg, &result);
+
     if (result == BAD_REQUEST) {
       printf("Bad Request on %d\n", sock_fd);
       close(sock_fd);
@@ -37,6 +39,17 @@ void handle_connection(int* sock_fd_ptr) {
       printf("Client requested to close connection on %d\n", sock_fd);
       close(sock_fd);
       return;
+    }
+
+    printf("Received HTTP Request:\n");
+    printf("Method: %s\n", http_msg->method);
+    printf("Path: %s\n", http_msg->path);
+    printf("Version: %s\n", http_msg->http_version);
+    printf("Headers:\n%s\n", http_msg->headers);
+    if (http_msg->body_length > 0 && http_msg->body != NULL) {
+      printf("Body (%d bytes):\n%s\n", http_msg->body_length, http_msg->body);
+    } else {
+      printf("No Body\n");
     }
 
     respond_to_http_message(sock_fd, http_msg);
