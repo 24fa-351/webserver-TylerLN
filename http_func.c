@@ -69,8 +69,8 @@ void calc(int sock_fd, const char* query_params) {
     return;
   }
 
-  int a = 0, b = 0;
-  int num_params = sscanf(query_params, "a=%d&b=%d", &a, &b);
+  int num_1 = 0, num_2 = 0;
+  int num_params = sscanf(query_params, "a=%d&b=%d", &num_1, &num_2);
 
   if (num_params != 2) {
     write(sock_fd, "HTTP/1.1 400 Bad Request\r\nContent-Length: 0\r\n\r\n", 42);
@@ -78,7 +78,7 @@ void calc(int sock_fd, const char* query_params) {
     return;
   }
 
-  int result = a + b;
+  int result = num_1 + num_2;
 
   char response[MAX_BUFFER_SIZE];
   snprintf(response, sizeof(response),
